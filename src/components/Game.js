@@ -128,19 +128,34 @@ const Game = ({status, setStatus}) => {
     }
   }
 
-
+  const touchControl = (e) => {
+    const midpoint = window.innerWidth/2;
+    if (e.type === "touchend") {
+      setDirection(0);
+    } else if (e.type === "touchstart" ) {
+        const x = e.touches[0].clientX;
+        if (x < midpoint) {
+          setDirection(-5);
+        } else if ( x > midpoint) {
+          setDirection(5);
+        }
+    }
+    
+  }
   
 
   useEffect(() => {
     document.addEventListener('contextmenu', event => event.preventDefault());
     document.addEventListener("keydown", changeDirection);
     document.addEventListener("keyup", changeDirection);
- 
+    document.addEventListener("touchstart", touchControl);
+    document.addEventListener("touchend", touchControl);
     return () => {
       document.removeEventListener('contextmenu', event => event.preventDefault());
       document.removeEventListener("keydown", changeDirection);
       document.removeEventListener("keyup", changeDirection);
-
+      document.removeEventListener("touchstart", touchControl)
+      document.removeEventListener("touchend", touchControl)
     };
   }, []);
 
