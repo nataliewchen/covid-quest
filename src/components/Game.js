@@ -1,13 +1,16 @@
 import React, {useState, useEffect} from 'react';
+import ReactAudioPlayer from 'react-audio-player';
 
 // components
 import Virus from './Virus';
 import EndScreen from './EndScreen';
 
-// images
-import rocket from '../imgs/rocket.png'
-import crash from '../imgs/crash.png';
-import vaccine from '../imgs/vaccine.png';
+// assets
+import rocket from '../assets/rocket.png'
+import crash from '../assets/crash.png';
+import vaccine from '../assets/vaccine.png';
+import bgMusic from '../assets/Electronic Fantasy.ogg';
+import crashSfx from '../assets/crash.wav';
 
 // utils
 import checkCollision from '../checkCollision';
@@ -113,6 +116,13 @@ const Game = ({status, setStatus}) => {
     }
   }, [collision, itemSpeed]);
 
+  useEffect(() => {
+    if (lives < 3) {
+      const crashAudio = document.querySelector('#crash-audio');
+      crashAudio.play();
+      crashAudio.currentTime = 0;
+    }
+  }, [lives])
 
   let keyLog = {};
   const changeDirection = (e) => {
@@ -145,13 +155,11 @@ const Game = ({status, setStatus}) => {
   
 
   useEffect(() => {
-    document.addEventListener('contextmenu', event => event.preventDefault());
     document.addEventListener("keydown", changeDirection);
     document.addEventListener("keyup", changeDirection);
     document.addEventListener("touchstart", touchControl);
     document.addEventListener("touchend", touchControl);
     return () => {
-      document.removeEventListener('contextmenu', event => event.preventDefault());
       document.removeEventListener("keydown", changeDirection);
       document.removeEventListener("keyup", changeDirection);
       document.removeEventListener("touchstart", touchControl)
@@ -159,13 +167,19 @@ const Game = ({status, setStatus}) => {
     };
   }, []);
 
-  const pause = () => {
-    setCollision(prev => prev===null ? true : null);
-  }
-
   
   return (
     <div id="game">
+      {!collision ? <ReactAudioPlayer
+        src={bgMusic}
+        autoPlay
+        controls={false}
+      /> : ''}
+       <ReactAudioPlayer id="crash-audio"
+        src={crashSfx}
+        autoPlay={false}
+        controls={false}
+      />
       <div id="game-header">
         <div id="lives">LIVES: &nbsp; 
           {lives > 0 ? <img key={1} src={vaccine} alt="vaccine"/> : ""}
@@ -174,13 +188,14 @@ const Game = ({status, setStatus}) => {
         </div>
         <div id="distance">{Math.trunc(distance)} MILES</div>
       </div>
-      <button onClick={pause}>pause</button>
+      
       
       
       {positions.viruses.map((virus, i) => 
         <Virus key={i} xPos={virus.x} yPos={virus.y}
       /> )}
       {collision ? <img id="crash" src={crash} alt="virus" style={{ top: 385, left: collision }} /> : ""}
+     
       <div id="user" className={`${blink ? "crash-blink" : ""}`}>
         <img src={rocket} alt="rocket" style={{ left: positions.userX }} />
       </div>

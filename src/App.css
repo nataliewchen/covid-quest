@@ -10,6 +10,7 @@ body {
   border-radius: 1px;
   margin: 30px auto;
   background-color: rgb(50, 50, 51);
+  /* background: url("./imgs/background.png"); */
   color: white;
   position: relative;
   overflow: hidden;
@@ -75,6 +76,10 @@ button {
   border-radius: 10px;
 }
 
+button:hover {
+  transform: scale(1.05);
+}
+
 #game-header {
   position: absolute;
   width: 280px;
@@ -131,10 +136,4 @@ button {
 
 .crash-blink {
   opacity: 25%;
-}
-
-#touch-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }

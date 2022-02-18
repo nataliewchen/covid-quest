@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import virus from '../imgs/virus.png';
 
 const StartScreen = ({setStatus}) => {
@@ -28,7 +28,7 @@ const StartScreen = ({setStatus}) => {
           <p>You've just launched your first mission into space...</p>
           <p>But wait a second — How did COVID-19 get out here?!</p>
         </div>
-        <p>Use the left and right arrow keys to dodge the coronavirus, and don't let your vaccine lives run out!</p>
+        <p>Dodge the coronavirus asteroids either by using the left & right arrow keys or tapping on the left & right sides of the screen.</p>
         <button onClick={handleStartGame}>START</button>
       </div>
       <div id="credits">

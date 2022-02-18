@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import virus from '../imgs/virus.png';
+import React from 'react';
+import virus from '../assets/virus.png';
 
 const Virus = ({xPos, yPos}) => {
   const virusSize = 40;
