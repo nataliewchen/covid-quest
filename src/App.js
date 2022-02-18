@@ -1,23 +1,21 @@
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
 
+import StartScreen from './components/StartScreen';
+import Game from './components/Game';
+import TouchControls from './components/TouchControls';
+import EndScreen from './components/EndScreen';
+
 function App() {
+  const [status, setStatus] = useState('start');
+  const [mobile, setMobile] = useState(false);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {status === 'start' ? <StartScreen setStatus={setStatus} /> : ""}
+      {status === 'playing' ? <Game status={status} setStatus={setStatus} /> : ""}
+      {status === 'playing' && mobile ? <TouchControls /> : ""}
     </div>
   );
 }
