@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import virus from '../imgs/virus.png';
+import virus from '../assets/virus.png';
 
 const StartScreen = ({setStatus}) => {
 

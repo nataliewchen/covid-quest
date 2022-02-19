@@ -27,6 +27,7 @@ const Game = ({status, setStatus}) => {
   const [lives, setLives] = useState(3);
   const [blink, setBlink] = useState(false); 
 
+  // adds a class that lowers the opacity of the rocket
   const blinkUser = () => {
     setBlink(true);
     setTimeout(() => {
@@ -38,25 +39,29 @@ const Game = ({status, setStatus}) => {
     const updateObjects = setInterval(() => {
       if (!collision) {
         setPositions(prev => {
-          const afterUpdate = prev.viruses.map(virus => ({ // move viruses down screen
+          // update virus positions based on speed and check each virus for user collision
+          const afterUpdate = prev.viruses.map(virus => ({
             x: virus.x,
             y: virus.y + 3*itemSpeed,
             collision: checkCollision(prev.userX, virus.x, virus.y)
           }));
 
+          // filter out a collided virus (so it disappears from screen)
           const active = afterUpdate.filter(virus => {
             if (virus.collision) {
-              blinkUser();
-              setLives(prev => {
+              blinkUser(); // user feedback
+              setLives(prev => { // decrease lives
                 if (prev === 1) {
-                  setCollision(virus.collision);
+                  setCollision(virus.collision); // game over if no lives left
                 }
                 return prev - 0.5;
               })
             }
+            // keep any viruses that are still visible on screen and not collided
             return (virus.y < 500 && virus.collision === null);
           });
 
+          // update user position based on controls
           return {
             userX: (prev.userX + direction > 20 && prev.userX + direction < 280 ? prev.userX + direction : prev.userX), 
             viruses: active
@@ -120,7 +125,7 @@ const Game = ({status, setStatus}) => {
     if (lives < 3) {
       const crashAudio = document.querySelector('#crash-audio');
       crashAudio.play();
-      crashAudio.currentTime = 0;
+      crashAudio.currentTime = 0; // reset audio for next crash
     }
   }, [lives])
 
@@ -150,7 +155,6 @@ const Game = ({status, setStatus}) => {
           setDirection(5);
         }
     }
-    
   }
   
 
@@ -188,8 +192,6 @@ const Game = ({status, setStatus}) => {
         </div>
         <div id="distance">{Math.trunc(distance)} MILES</div>
       </div>
-      
-      
       
       {positions.viruses.map((virus, i) => 
         <Virus key={i} xPos={virus.x} yPos={virus.y}
