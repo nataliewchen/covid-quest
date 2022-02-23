@@ -50,14 +50,12 @@ const Game = ({status, setStatus, sound}) => {
           // filter out a collided virus (so it disappears from screen)
           const active = afterUpdate.filter(virus => {
             if (virus.collision) {
-              console.log('collision detected');
               blinkUser(); // user feedback
               setLives(prev => { // decrease lives
-                console.log('prev lives', prev);
                 if (prev === 1) {
                   setCollision(virus.collision); // game over if no lives left
                 }
-                return prev - 0.5;
+                return prev - 1;
               })
             }
             // keep any viruses that are still visible on screen and not collided
