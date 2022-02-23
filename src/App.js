@@ -13,8 +13,8 @@ function App() {
   const width = useWidth();
   const top = (height-510)/2;
   let scale = 1;
-  if (width > 500 && height > 510) {
-    scale = height/600;
+  if (width > 320 && height > 600) {
+    scale = Math.min(width/320, height/600);
   }
 
 
