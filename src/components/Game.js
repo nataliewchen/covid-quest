@@ -15,7 +15,7 @@ import crashSfx from '../assets/crash.wav';
 // utils
 import checkCollision from '../checkCollision';
 
-const Game = ({status, setStatus}) => {
+const Game = ({status, setStatus, sound}) => {
   const [direction, setDirection] = useState(0);
   const [distance, setDistance] = useState(0);
   const [collision, setCollision] = useState(null);
@@ -122,26 +122,14 @@ const Game = ({status, setStatus}) => {
   }, [collision, itemSpeed]);
 
   useEffect(() => {
-    if (lives < 3) {
+    if (sound && lives < 3) {
       const crashAudio = document.querySelector('#crash-audio');
       crashAudio.play();
       crashAudio.currentTime = 0; // reset audio for next crash
     }
-  }, [lives])
+  }, [sound, lives])
 
-  let keyLog = {};
-  const changeDirection = (e) => {
-    keyLog[e.key] = e.type;
-    const left = keyLog['ArrowLeft'];
-    const right = keyLog['ArrowRight'];
-    if (left === 'keydown' && right !== 'keydown') { // left arrow only: move left
-      setDirection(-5);
-    } else if (right === 'keydown' && left !== 'keydown') { // right arrow only: move right
-      setDirection(5);
-    } else if (left === 'keyup' || right === 'keyup' || (left === 'keydown' && right === 'keydown')) { // both arrows down or up: stop
-      setDirection(0);
-    }
-  }
+
 
   const touchControl = (e) => {
     const midpoint = window.innerWidth/2;
@@ -159,6 +147,19 @@ const Game = ({status, setStatus}) => {
   
 
   useEffect(() => {
+    let keyLog = {};
+    const changeDirection = (e) => {
+      keyLog[e.key] = e.type;
+      const left = keyLog['ArrowLeft'];
+      const right = keyLog['ArrowRight'];
+      if (left === 'keydown' && right !== 'keydown') { // left arrow only: move left
+        setDirection(-5);
+      } else if (right === 'keydown' && left !== 'keydown') { // right arrow only: move right
+        setDirection(5);
+      } else if (left === 'keyup' || right === 'keyup' || (left === 'keydown' && right === 'keydown')) { // both arrows down or up: stop
+        setDirection(0);
+      }
+    }
     document.addEventListener("keydown", changeDirection);
     document.addEventListener("keyup", changeDirection);
     document.addEventListener("touchstart", touchControl);
@@ -174,16 +175,16 @@ const Game = ({status, setStatus}) => {
   
   return (
     <div id="game">
-      {!collision ? <ReactAudioPlayer
+      {!collision && sound ? <ReactAudioPlayer
         src={bgMusic}
         autoPlay
         controls={false}
       /> : ''}
-       <ReactAudioPlayer id="crash-audio"
+       {sound ? <ReactAudioPlayer id="crash-audio"
         src={crashSfx}
         autoPlay={false}
         controls={false}
-      />
+      /> : ''}
       <div id="game-header">
         <div id="lives">LIVES: &nbsp; 
           {lives > 0 ? <img key={1} src={vaccine} alt="vaccine"/> : ""}

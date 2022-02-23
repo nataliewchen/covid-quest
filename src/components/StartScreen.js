@@ -1,23 +1,34 @@
 import React, {useEffect} from 'react';
 import virus from '../assets/virus.png';
 
-const StartScreen = ({setStatus}) => {
+const StartScreen = ({setStatus, sound, setSound}) => {
 
   const handleStartGame = () => {
     setStatus('playing');
   }
 
-  const keydownEnter = (e) => {
-    if (e.key === 'Enter') {
-      handleStartGame();
+
+
+  const handleSound = (e) => {
+    if (e.target.classList[1] === 'bi-volume-up-fill') {
+      setSound(true);
+    } else if (e.target.classList[1] === 'bi-volume-mute-fill') {
+      setSound(false);
     }
   }
 
   useEffect(() => {
+    const keydownEnter = (e) => {
+      if (e.key === 'Enter') {
+        handleStartGame();
+      }
+    }
+
     document.addEventListener("keydown", keydownEnter);
     return () => {
       document.removeEventListener("keydown", keydownEnter);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -30,6 +41,11 @@ const StartScreen = ({setStatus}) => {
         </div>
         <p>Dodge the coronavirus asteroids either by using the left & right arrow keys or tapping on the left & right sides of the screen.</p>
         <button onClick={handleStartGame}>START</button>
+        <div id="switch">
+          Sound:
+          <i onClick={handleSound} className={`bi bi-volume-up-fill ${!sound ? 'clickable' : ''}`} style={{ opacity: sound ? 1 : 0.2}}></i>
+          <i onClick={handleSound}  className={`bi bi-volume-mute-fill ${sound ? 'clickable' : ''}`} style={{ opacity: sound ? 0.2 : 1}}></i>
+        </div>
       </div>
       <div id="credits">
         <div>&#169; 2022 by Natalie Chen</div>
