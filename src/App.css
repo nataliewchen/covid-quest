@@ -55,15 +55,16 @@ button:hover {
 
 #switch {
   display: flex;
-  align-items: center;
-  gap: 15px;
+  flex-direction: column;
   border: 1px solid white;
-  padding: 4px 8px;
+  padding: 5px;
   border-radius: 10px;
+  font-size: 0.6em;
 }
 
 #switch i {
-  font-size: 1.2em;
+  font-size: 2em;
+  margin: 0 8px;
 }
 
 #switch .clickable:hover {

@@ -36,15 +36,16 @@ const StartScreen = ({setStatus, sound, setSound}) => {
       <div id="info">
         <h1>c<img src={virus} alt="virus" />vid quest</h1>
         <div>
-          <p>You've just launched your first mission into space...</p>
-          <p>But wait a second — How did COVID-19 get out here?!</p>
+          <p>You've just embarked on your first space mission... But wait a second — How did COVID-19 get out here?!</p>
         </div>
         <p>Dodge the coronavirus asteroids either by using the left & right arrow keys or tapping on the left & right sides of the screen.</p>
-        <button onClick={handleStartGame}>START</button>
+        <button onClick={handleStartGame}>LAUNCH</button>
         <div id="switch">
-          Sound:
+          Music:
+          <div>
           <i onClick={handleSound} className={`bi bi-volume-up-fill ${!sound ? 'clickable' : ''}`} style={{ opacity: sound ? 1 : 0.2}}></i>
           <i onClick={handleSound}  className={`bi bi-volume-mute-fill ${sound ? 'clickable' : ''}`} style={{ opacity: sound ? 0.2 : 1}}></i>
+          </div>
         </div>
       </div>
       <div id="credits">
