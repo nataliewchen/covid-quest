@@ -26,6 +26,7 @@ const Game = ({status, setStatus, sound}) => {
   const [itemSpeed, setItemSpeed] = useState(1);
   const [lives, setLives] = useState(3);
   const [blink, setBlink] = useState(false); 
+  const [bgPos, setBgPos] = useState(0);
 
   // adds a class that lowers the opacity of the rocket
   const blinkUser = () => {
@@ -67,6 +68,7 @@ const Game = ({status, setStatus, sound}) => {
             viruses: active
           }
         });
+        setBgPos(prev => prev + 2);
       } else { // collision
         clearInterval(updateObjects);
       }
@@ -174,16 +176,18 @@ const Game = ({status, setStatus, sound}) => {
 
   
   return (
-    <div id="game">
+    <div id="game" style={{ backgroundPosition: `50% ${bgPos}px`}}>
       {!collision && sound ? <ReactAudioPlayer
         src={bgMusic}
         autoPlay
         controls={false}
+        volume={0.4}
       /> : ''}
        {sound ? <ReactAudioPlayer id="crash-audio"
         src={crashSfx}
         autoPlay={false}
         controls={false}
+        volume={0.4}
       /> : ''}
       <div id="game-header">
         <div id="lives">LIVES: &nbsp; 

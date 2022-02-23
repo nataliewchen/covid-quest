@@ -9,8 +9,7 @@ body {
   border: 5px solid white;
   border-radius: 1px;
   margin: 0 auto;
-  background-color: rgb(50, 50, 51);
-  /* background: url("./imgs/background.png"); */
+  background-color: rgb(42, 42, 49);
   color: white;
   position: relative;
   overflow: hidden;
@@ -94,6 +93,11 @@ button {
 
 button:hover {
   transform: scale(1.05);
+}
+
+#game {
+  height: 100%;
+  background: url("./assets/stars.png");
 }
 
 #game-header {
