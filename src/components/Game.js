@@ -9,7 +9,7 @@ import EndScreen from './EndScreen';
 import rocket from '../assets/rocket.png'
 import crash from '../assets/crash.png';
 import vaccine from '../assets/vaccine.png';
-import bgMusic from '../assets/Electronic-Fantasy.ogg';
+import bgMusic from '../assets/ElectronicFantasy.wav';
 import crashSfx from '../assets/crash.wav';
 
 // utils
