@@ -4,6 +4,7 @@ import ReactAudioPlayer from 'react-audio-player';
 // components
 import Virus from './Virus';
 import EndScreen from './EndScreen';
+import TouchCover from './TouchCover';
 
 // assets
 import rocket from '../assets/rocket.png'
@@ -181,6 +182,7 @@ const Game = ({status, setStatus, sound}) => {
   return (
     <div id="game" style={{ backgroundPosition: `50% ${bgPos}px`}}>
       <iframe src="https://olafwempe.com/mp3/silence/silence.mp3" type="audio/mp3" allow="autoplay" id="audio" style={{display: "none"}} title="silence"></iframe>
+      {/* <TouchCover setDirection={setDirection} /> */}
       {!collision && sound ? <ReactAudioPlayer id="bg-audio"
         src={bgMusic}
         autoPlay={true}
