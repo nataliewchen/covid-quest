@@ -9,7 +9,7 @@ import EndScreen from './EndScreen';
 import rocket from '../assets/rocket.png'
 import crash from '../assets/crash.png';
 import vaccine from '../assets/vaccine.png';
-import bgMusic from '../assets/Electronic Fantasy.ogg';
+import bgMusic from '../assets/Electronic-Fantasy.ogg';
 import crashSfx from '../assets/crash.wav';
 
 // utils
@@ -181,12 +181,12 @@ const Game = ({status, setStatus, sound}) => {
   return (
     <div id="game" style={{ backgroundPosition: `50% ${bgPos}px`}}>
       <iframe src="https://olafwempe.com/mp3/silence/silence.mp3" type="audio/mp3" allow="autoplay" id="audio" style={{display: "none"}} title="silence"></iframe>
-      {/* {!collision && sound ? <ReactAudioPlayer id="bg-audio"
+      {!collision && sound ? <ReactAudioPlayer id="bg-audio"
         src={bgMusic}
         autoPlay={true}
         controls={false}
         volume={0.4}
-      /> : ''} */}
+      /> : ''}
        {sound ? <ReactAudioPlayer id="crash-audio"
         src={crashSfx}
         autoPlay={false}

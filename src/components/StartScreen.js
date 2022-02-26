@@ -4,11 +4,11 @@ import virus from '../assets/virus.png';
 const StartScreen = ({setStatus, sound, setSound}) => {
 
   const handleStartGame = () => {
-    // setStatus('playing');
-    if (sound) {
-      const bgAudio = document.querySelector('#bg-audio');
-      bgAudio.play();
-    }
+    setStatus('playing');
+    // if (sound) {
+    //   const bgAudio = document.querySelector('#bg-audio');
+    //   bgAudio.play();
+    // }
   }
 
 

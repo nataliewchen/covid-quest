@@ -23,11 +23,11 @@ function App() {
 
   return (
     <div className="App" style={{top: top, transform: `scale(${scale})`}}>
-       <ReactAudioPlayer id="bg-audio"
+       {/* <ReactAudioPlayer id="bg-audio"
         src={bgMusic}
         volume={0.4}
-        controls={true}
-      />
+        controls={true} 
+      /> */}
       {status === 'start' ? <StartScreen setStatus={setStatus} sound={sound} setSound={setSound} /> : ""}
       {status === 'playing' ? <Game status={status} setStatus={setStatus} sound={sound} /> : ""}
     </div>
