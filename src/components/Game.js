@@ -27,7 +27,6 @@ const Game = ({status, setStatus, sound}) => {
   const [lives, setLives] = useState(3);
   const [blink, setBlink] = useState(false); 
   const [bgPos, setBgPos] = useState(0);
-  // const [bgAudio, setBgAudio] = useState(new Audio({bgMusic}));
 
   // adds a class that lowers the opacity of the rocket
   const blinkUser = () => {
@@ -125,10 +124,6 @@ const Game = ({status, setStatus, sound}) => {
   }, [collision, itemSpeed]);
 
   useEffect(() => {
-    // if (sound && !collision) {
-    //   const bgAudio = document.querySelector('#bg-audio');
-    //   bgAudio.play();
-    // }
     if (sound && lives < 3) {
       const crashAudio = document.querySelector('#crash-audio');
       crashAudio.play();
@@ -185,10 +180,11 @@ const Game = ({status, setStatus, sound}) => {
   
   return (
     <div id="game" style={{ backgroundPosition: `50% ${bgPos}px`}}>
+      <iframe src="https://olafwempe.com/mp3/silence/silence.mp3" type="audio/mp3" allow="autoplay" id="audio" style={{display: "none"}} title="silence"></iframe>
       {!collision && sound ? <ReactAudioPlayer id="bg-audio"
         src={bgMusic}
-        autoPlay={false}
-        controls={true}
+        autoPlay={true}
+        controls={false}
         volume={0.4}
       /> : ''}
        {sound ? <ReactAudioPlayer id="crash-audio"
