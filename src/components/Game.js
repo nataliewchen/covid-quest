@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import ReactAudioPlayer from 'react-audio-player';
+import AudioPlayer from 'react-h5-audio-player';
 
 // components
 import Virus from './Virus';
@@ -177,11 +178,18 @@ const Game = ({status, setStatus, sound}) => {
   
   return (
     <div id="game" style={{ backgroundPosition: `50% ${bgPos}px`}}>
-      {!collision && sound ? <ReactAudioPlayer
+      {/* {!collision && sound ? <ReactAudioPlayer
         src={bgMusic}
         autoPlay
         controls={false}
         volume={0.4}
+      /> : ''} */}
+      {!collision && sound ? <AudioPlayer
+        autoPlay
+        showJumpControls={false}
+        showDownloadProgress={false}
+        showFilledProgress={false}
+        src={bgMusic}
       /> : ''}
        {sound ? <ReactAudioPlayer id="crash-audio"
         src={crashSfx}
