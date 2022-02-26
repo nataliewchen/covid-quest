@@ -26,6 +26,7 @@ function App() {
        <ReactAudioPlayer id="bg-audio"
         src={bgMusic}
         volume={0.4}
+        controls={true}
       />
       {status === 'start' ? <StartScreen setStatus={setStatus} sound={sound} setSound={setSound} /> : ""}
       {status === 'playing' ? <Game status={status} setStatus={setStatus} sound={sound} /> : ""}
