@@ -5,9 +5,6 @@ import { useHeight, useWidth } from './hooks';
 import StartScreen from './components/StartScreen';
 import Game from './components/Game';
 
-import ReactAudioPlayer from 'react-audio-player';
-import bgMusic from './assets/Electronic Fantasy.ogg';
-
 
 function App() {
   const [status, setStatus] = useState('start');
@@ -23,11 +20,6 @@ function App() {
 
   return (
     <div className="App" style={{top: top, transform: `scale(${scale})`}}>
-       {/* <ReactAudioPlayer id="bg-audio"
-        src={bgMusic}
-        volume={0.4}
-        controls={true} 
-      /> */}
       {status === 'start' ? <StartScreen setStatus={setStatus} sound={sound} setSound={setSound} /> : ""}
       {status === 'playing' ? <Game status={status} setStatus={setStatus} sound={sound} /> : ""}
     </div>
