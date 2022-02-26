@@ -186,6 +186,7 @@ const Game = ({status, setStatus, sound}) => {
     <div id="game" style={{ backgroundPosition: `50% ${bgPos}px`}}>
       {!collision && sound ? <ReactAudioPlayer id="bg-audio"
         src={bgMusic}
+        autoPlay={false}
         controls={false}
         volume={0.4}
       /> : ''}
