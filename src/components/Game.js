@@ -18,12 +18,12 @@ import checkCollision from '../checkCollision';
 const Game = ({status, setStatus, sound}) => {
   const [direction, setDirection] = useState(0);
   const [distance, setDistance] = useState(0);
-  const [collision, setCollision] = useState(null);
+  const [collision, setCollision] = useState(null); // x-pos of game-ending collision
   const [positions, setPositions] = useState({
     userX: 150,
     viruses: []
   });
-  const [itemSpeed, setItemSpeed] = useState(1);
+  const [virusSpeed, setVirusSpeed] = useState(1);
   const [lives, setLives] = useState(3);
   const [blink, setBlink] = useState(false); 
   const [bgPos, setBgPos] = useState(0);
@@ -43,7 +43,7 @@ const Game = ({status, setStatus, sound}) => {
           // update virus positions based on speed and check each virus for user collision
           const afterUpdate = prev.viruses.map(virus => ({
             x: virus.x,
-            y: virus.y + 3*itemSpeed,
+            y: virus.y + 3*virusSpeed,
             collision: checkCollision(prev.userX, virus.x, virus.y)
           }));
 
@@ -58,6 +58,7 @@ const Game = ({status, setStatus, sound}) => {
                 return prev - 1;
               })
             }
+
             // keep any viruses that are still visible on screen and not collided
             return (virus.y < 500 && virus.collision === null);
           });
@@ -78,7 +79,7 @@ const Game = ({status, setStatus, sound}) => {
       clearInterval(updateObjects);
     }
 
-  }, [direction, collision, itemSpeed]);
+  }, [direction, collision, virusSpeed]);
 
   useEffect(() => {
     const updateDistance = setInterval(() => {
@@ -90,9 +91,10 @@ const Game = ({status, setStatus, sound}) => {
       }
     }, 500);
 
+
     const increaseSpeed = setInterval(() => {
       if (!collision) {
-        setItemSpeed(prev => prev + 0.2);
+        setVirusSpeed(prev => prev + 0.2);
       }
     }, 5000);
 
@@ -100,7 +102,7 @@ const Game = ({status, setStatus, sound}) => {
       clearInterval(updateDistance);
       clearInterval(increaseSpeed);
     }
-  }, [collision, itemSpeed]);
+  }, [collision, virusSpeed]);
 
   useEffect(() => {
     const addVirus = setInterval(() => {
@@ -116,12 +118,12 @@ const Game = ({status, setStatus, sound}) => {
       } else { // collision
         clearInterval(addVirus);
       }
-    }, 1000/itemSpeed);
+    }, 1000/virusSpeed);
 
     return function cleanup() {
       clearInterval(addVirus);
     }
-  }, [collision, itemSpeed]);
+  }, [collision, virusSpeed]);
 
   useEffect(() => {
     if (sound && lives < 3) {
@@ -129,7 +131,7 @@ const Game = ({status, setStatus, sound}) => {
       crashAudio.play();
       crashAudio.currentTime = 0; // reset audio for next crash
     }
-  }, [sound, lives, collision])
+  }, [sound, lives])
 
 
 
@@ -147,22 +149,23 @@ const Game = ({status, setStatus, sound}) => {
         }
     }
   }
+
+  const changeDirection = (e) => {
+    let keyLog = {};
+    keyLog[e.key] = e.type;
+    const left = keyLog['ArrowLeft'];
+    const right = keyLog['ArrowRight'];
+    if (left === 'keydown' && right !== 'keydown') { // left arrow only: move left
+      setDirection(-5);
+    } else if (right === 'keydown' && left !== 'keydown') { // right arrow only: move right
+      setDirection(5);
+    } else if (left === 'keyup' || right === 'keyup' || (left === 'keydown' && right === 'keydown')) { // both arrows down or up: stop
+      setDirection(0);
+    }
+  }
   
 
   useEffect(() => {
-    let keyLog = {};
-    const changeDirection = (e) => {
-      keyLog[e.key] = e.type;
-      const left = keyLog['ArrowLeft'];
-      const right = keyLog['ArrowRight'];
-      if (left === 'keydown' && right !== 'keydown') { // left arrow only: move left
-        setDirection(-5);
-      } else if (right === 'keydown' && left !== 'keydown') { // right arrow only: move right
-        setDirection(5);
-      } else if (left === 'keyup' || right === 'keyup' || (left === 'keydown' && right === 'keydown')) { // both arrows down or up: stop
-        setDirection(0);
-      }
-    }
     document.addEventListener("keydown", changeDirection);
     document.addEventListener("keyup", changeDirection);
     document.addEventListener("touchstart", touchControl);
